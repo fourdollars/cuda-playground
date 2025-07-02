@@ -1,6 +1,9 @@
 # CUDA Hello World
 
-This is a simple "Hello World" program written in CUDA.
+This project contains two simple CUDA programs:
+
+*   `hello`: A basic "Hello World" program.
+*   `id`: A more advanced program that demonstrates how to calculate a unique global thread ID for each thread in a grid.
 
 ## Prerequisites
 
@@ -38,12 +41,18 @@ This is a simple "Hello World" program written in CUDA.
     make
     ```
 
-3.  **Run the executable.**
+3.  **Run the executables.**
 
-    After the build is complete, you can run the program:
+    After the build is complete, you can run the programs:
 
     ```bash
-    ./main
+    ./hello
     ```
 
     You should see the output: `Hello CUDA world`
+
+    ```bash
+    ./id
+    ```
+
+    You will see a list of greetings from each thread, along with their calculated global ID.

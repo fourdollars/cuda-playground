@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.28)
 
-project("main" LANGUAGES CXX CUDA)
+project("hello" LANGUAGES CXX CUDA)
 
-add_executable(main)
+add_executable(hello)
+target_sources(hello PRIVATE "hello.cu")
 
-target_sources(main PRIVATE "main.cu")
+add_executable(id)
+target_sources(id PRIVATE "id.cu")
