@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 // Simple vector struct for color representation
 struct Vec3 {
@@ -50,8 +51,13 @@ int main() {
     dim3 threadsPerBlock(16, 16);
     dim3 numBlocks(width / threadsPerBlock.x, height / threadsPerBlock.y);
 
+    auto start = std::chrono::high_resolution_clock::now();
     mandelbrot_kernel<<<numBlocks, threadsPerBlock>>>(d_pixels);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end - start;
+    std::cout << "GPU execution time: " << diff.count() << " s\n";
 
+    start = std::chrono::high_resolution_clock::now();
     Vec3 *h_pixels = (Vec3 *)malloc(width * height * sizeof(Vec3));
     cudaMemcpy(h_pixels, d_pixels, width * height * sizeof(Vec3), cudaMemcpyDeviceToHost);
 
@@ -68,6 +74,9 @@ int main() {
             outfile << r << " " << g << " " << b << "\n";
         }
     }
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    std::cout << "Image output time: " << diff.count() << " s\n";
 
     cudaFree(d_pixels);
     free(h_pixels);

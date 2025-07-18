@@ -57,6 +57,7 @@ int main() {
 
     // Write the PPM image file
     std::ofstream outfile("mandelbrot_cpu.ppm");
+    start = std::chrono::high_resolution_clock::now();
     outfile << "P3\n" << width << " " << height << "\n255\n";
 
     for (int i = 0; i < height; i++) {
@@ -68,6 +69,9 @@ int main() {
             outfile << r << " " << g << " " << b << "\n";
         }
     }
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    std::cout << "Image output time: " << diff.count() << " s\n";
 
     std::cout << "Mandelbrot set image generated as mandelbrot_cpu.ppm" << std::endl;
 
